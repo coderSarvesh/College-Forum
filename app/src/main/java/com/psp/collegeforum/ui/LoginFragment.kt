@@ -20,8 +20,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val view = inflater.inflate(R.layout.fragment_login,container,false)
 
         view.btnLogin.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_userDetailsFragment)
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment)
         }
         return view
+
     }
     }
