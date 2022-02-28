@@ -7,33 +7,29 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.psp.collegeforum.R
 import com.psp.collegeforum.Retrofit.QuestionAdapter
 import com.psp.collegeforum.Retrofit.RetrofitInstance
 import com.psp.collegeforum.databinding.FragmentMainBinding
-import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.rvInMainFrag
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import retrofit2.HttpException
 import java.io.IOException
+
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var questionAdapter: QuestionAdapter
 
-
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            //Navigation
+        //Navigation
         view.fabAddQuestion.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_questionFragment)
         }
-
 
         binding = FragmentMainBinding.inflate(layoutInflater)
         setupRV()
@@ -44,11 +40,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 RetrofitInstance.api.getQuestion()
             } catch (e: IOException) {
                 Log.e(ContentValues.TAG, "ERROR")
-                //binding.progressBar.isVisible = false
                 return@launchWhenCreated
             } catch (e: HttpException) {
                 Log.e(ContentValues.TAG, "HTTP ERROR")
-                //binding.progressBar.isVisible = false
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null) {
@@ -61,9 +55,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun setupRV()=binding.rvInMainFrag.apply {
-        rvInMainFrag.layoutManager = LinearLayoutManager(activity)
-        questionAdapter = QuestionAdapter()
-        adapter = questionAdapter
+         questionAdapter = QuestionAdapter()
+        val myRecycler = view?.findViewById<RecyclerView>(R.id.rvInMainFrag)
+        myRecycler?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        myRecycler?.adapter = questionAdapter
+
+
     }
 }
-
