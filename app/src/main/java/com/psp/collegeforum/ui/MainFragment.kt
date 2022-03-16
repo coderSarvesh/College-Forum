@@ -1,25 +1,20 @@
 package com.psp.collegeforum.ui
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.psp.collegeforum.R
+import com.psp.collegeforum.Retrofit.Mainvm
 import com.psp.collegeforum.Retrofit.QuestionAdapter
-import com.psp.collegeforum.Retrofit.RetrofitInstance
 import com.psp.collegeforum.databinding.FragmentMainBinding
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
-import retrofit2.HttpException
-import java.io.IOException
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
 
+    val viewModel = Mainvm()
     private lateinit var binding: FragmentMainBinding
     private lateinit var questionAdapter: QuestionAdapter
 
@@ -33,7 +28,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding = FragmentMainBinding.inflate(layoutInflater)
         setupRV()
-
+        viewModel.getQuestion()
+        /*
         lifecycleScope.launchWhenCreated {
 
             val response = try {
@@ -52,6 +48,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
 
         }
+        */
     }
 
     private fun setupRV()=binding.rvInMainFrag.apply {
